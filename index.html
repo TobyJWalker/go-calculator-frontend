@@ -37,7 +37,7 @@
 
             let equation = num1.toString() + ' ' + operation + ' ' + num2.toString();
 
-            let response = await fetch("http://10.43.1.1/equation", {
+            let response = await fetch("http://backend/equation", {
                 method: "POST",
                 headers: {
                     "Accept": "application/json",
