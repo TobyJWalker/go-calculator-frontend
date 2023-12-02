@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Calculator</title>
+</head>
+<body>
+
+    <div>
+        <input type="number" step=any name="num1" placeholder="Number 1">
+    </div>
+    <div>
+        <select name="operation">
+            <option value="+">Add</option>
+            <option value="-">Subtract</option>
+            <option value="*">Multiply</option>
+            <option value="/">Divide</option>
+        </select>
+    </div>
+    <div>
+        <input type="number" step=any name="num2" placeholder="Number 2">
+    </div>
+    <br>
+    <div>
+        <button onClick="calculateSum()" name="calculate">Calculate!</button>
+    </div>
+    <br><br>
+    <div>
+        <p>Answer: </p><p id="result"></p>
+    </div>
+
+    <script>
+        async function calculateSum() {
+            let num1 = document.getElementsByName("num1")[0].value;
+            let num2 = document.getElementsByName("num2")[0].value;
+            let operation = document.getElementsByName("operation")[0].value;
+
+            let equation = num1.toString() + ' ' + operation + ' ' + num2.toString();
+
+            let response = await fetch("http://10.43.1.1/equation", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({"equation":equation})
+            });
+
+            let result = await response.json();
+
+            document.getElementById("result").innerHTML = result["result"];
+        }
+    </script>
+
+</body>
+</html>
